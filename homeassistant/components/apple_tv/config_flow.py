@@ -58,6 +58,8 @@ OPTIONS_FLOW = {
     "init": SchemaFlowFormStep(OPTIONS_SCHEMA),
 }
 
+U_EXCEPT = "Unexpected exception"
+
 
 async def device_scan(
     hass: HomeAssistant, identifier: str | None, loop: asyncio.AbstractEventLoop
@@ -189,7 +191,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
             except DeviceAlreadyConfigured:
                 errors["base"] = "already_configured"
             except Exception:
-                _LOGGER.exception("Unexpected exception")
+                _LOGGER.exception(U_EXCEPT)
                 errors["base"] = "unknown"
             else:
                 await self.async_set_unique_id(
@@ -333,7 +335,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
         except DeviceAlreadyConfigured:
             return self.async_abort(reason="already_configured")
         except Exception:
-            _LOGGER.exception("Unexpected exception")
+            _LOGGER.exception(U_EXCEPT)
             return self.async_abort(reason="unknown")
 
         return await next_func()
@@ -478,7 +480,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
             _LOGGER.exception("Authentication problem")
             abort_reason = "invalid_auth"
         except Exception:
-            _LOGGER.exception("Unexpected exception")
+            _LOGGER.exception(U_EXCEPT)
             abort_reason = "unknown"
 
         if abort_reason:
@@ -520,7 +522,7 @@ class AppleTVConfigFlow(ConfigFlow, domain=DOMAIN):
                 _LOGGER.exception("Authentication problem")
                 errors["base"] = "invalid_auth"
             except Exception:
-                _LOGGER.exception("Unexpected exception")
+                _LOGGER.exception(U_EXCEPT)
                 errors["base"] = "unknown"
 
         return self.async_show_form(
