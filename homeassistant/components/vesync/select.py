@@ -45,8 +45,6 @@ HA_TO_VS_HUMIDIFIER_NIGHT_LIGHT_LEVEL_MAP = {
     v: k for k, v in VS_TO_HA_HUMIDIFIER_NIGHT_LIGHT_LEVEL_MAP.items()
 }
 
-ICON = "mdi:brightness-6"
-
 
 @dataclass(frozen=True, kw_only=True)
 class VeSyncSelectEntityDescription(SelectEntityDescription):
@@ -63,7 +61,7 @@ SELECT_DESCRIPTIONS: list[VeSyncSelectEntityDescription] = [
         key="night_light_level",
         translation_key="night_light_level",
         options=list(VS_TO_HA_HUMIDIFIER_NIGHT_LIGHT_LEVEL_MAP.values()),
-        icon=ICON,
+        icon="mdi:brightness-6",
         exists_fn=lambda device: is_humidifier(device) and device.supports_nightlight,
         # The select_option service framework ensures that only options specified are
         # accepted. ServiceValidationError gets raised for invalid value.
@@ -85,7 +83,7 @@ SELECT_DESCRIPTIONS: list[VeSyncSelectEntityDescription] = [
             PURIFIER_NIGHT_LIGHT_LEVEL_DIM,
             PURIFIER_NIGHT_LIGHT_LEVEL_ON,
         ],
-        icon=ICON,
+        icon="mdi:brightness-6",
         exists_fn=lambda device: is_purifier(device) and device.supports_nightlight,
         select_option_fn=lambda device, value: device.set_nightlight_mode(value),
         current_option_fn=lambda device: device.state.nightlight_status,
@@ -99,7 +97,7 @@ SELECT_DESCRIPTIONS: list[VeSyncSelectEntityDescription] = [
             OUTLET_NIGHT_LIGHT_LEVEL_ON,
             OUTLET_NIGHT_LIGHT_LEVEL_AUTO,
         ],
-        icon=ICON,
+        icon="mdi:brightness-6",
         exists_fn=lambda device: is_outlet(device) and device.supports_nightlight,
         select_option_fn=lambda device, value: device.set_nightlight_state(value),
         current_option_fn=lambda device: device.state.nightlight_status,
